@@ -49,16 +49,25 @@ public class LauncherAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
+        LauncherItem item = mItems.get(position);
+        if (item.iconDrawable != null) {
+            imageView.setImageDrawable(item.iconDrawable);
+        } else {
+            imageView.setImageResource(item.iconResId);
+        }
+
         int selectedPosition = ((Gallery) parent).getSelectedItemPosition();
         float targetScale = (position == selectedPosition) ? 1.0f : 0.75f;
 
         // if new use the newer setscale
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+
+         /* if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             imageView.setPivotX(dpToPx(60) / 2f);
             imageView.setPivotY(dpToPx(60)); // anchor to bottom
             imageView.setScaleX(targetScale);
             imageView.setScaleY(targetScale);
-        } else {
+        } else */
+         if (!ScaleAnimatorHelper.applyAdapterScale(imageView, targetScale, dpToPx(60) / 2f, dpToPx(60))) {
             // old one for 4.1-
             ScaleAnimation snapAnim = new ScaleAnimation(targetScale, targetScale,
                     targetScale, targetScale,
@@ -71,7 +80,6 @@ public class LauncherAdapter extends BaseAdapter {
 
         imageView.setTag(targetScale);
 
-        imageView.setImageResource(mItems.get(position).iconResId);
         return imageView;
     }
 }

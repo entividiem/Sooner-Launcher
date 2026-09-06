@@ -4,6 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <AnalogClock
+        android:id="@+id/clock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"/>
+
     <FrameLayout
         android:id="@+id/wallpaper_container"
         android:layout_width="fill_parent"
